@@ -1,0 +1,51 @@
+MAX_KEY_SIZE = 26
+mode = 'e'
+key = 0
+
+def getMode():
+    while True:
+        mode = input("Encrypt (e) or Decrypt (d) or Brute (b)\n").lower()
+        if mode in "encrypt e decrypt d brute b".split():
+            return mode
+        else:
+            print("Please enter either 'e' or 'd' or 'b'\n")
+
+def getKey():
+    while True:
+        key = int(input("Please enter a number value for your key.  1-26\n"))
+        if (key>=1 and key <=26):
+            return key
+
+def getMessage():
+    return input("Please enter your message\n").lower()
+
+def Translate(mode,key,message):
+    if (mode[0] == 'b'):
+        for key in range(1,27):
+            print(key,Translate('d',key,message))
+            
+    if (mode[0] == 'd'):
+        key = -key
+    translation = ''
+
+    for letter in message:
+        if letter.isalpha():
+            number =ord(letter)
+            number +=key
+
+            if number > ord("z"):
+                number -= 26
+            elif number < ord("a"):
+                number +=26
+            translation +=  chr(number)
+        else:
+            translation +=  letter
+    return translation
+
+mode = getMode()
+if (mode[0]  != 'b'):
+    key  = getKey()
+message = getMessage()
+print(Translate(mode,key,message))
+input("Press any key to exit")
+
